@@ -14,9 +14,7 @@ import { NinjaService } from './ninja.service';
 
 @Controller('ninjas')
 export class NinjaController {
-  constructor(private readonly ninjaService: NinjaService){
-
-  }
+  constructor(private readonly ninjaService: NinjaService) {}
   // GET /ninjas --> []
   @Get()
   getNinjas(@Query('weapon') weapon: 'stars' | 'nunchucks') {
@@ -26,29 +24,24 @@ export class NinjaController {
   //Get /ninjas/:id --> {...}
   @Get(':id')
   getOneNinja(@Param('id') id: string) {
-    return this.ninjaService.getNinja(+id)
+    return this.ninjaService.getNinja(+id);
   }
 
   // POST /ninjas
   @Post()
   createNinja(@Body() createNinjaDto: CreateNinjaDto) {
-    return {
-      name: createNinjaDto?.name,
-    };
+    return this.ninjaService.createNinja(createNinjaDto);
   }
 
   // PUT /ninjas/:id --> { ... }
   @Put(':id')
   updateNinja(@Param('id') id: string, @Body() updateNinjaDto: UpdateNinjaDto) {
-    return {
-      id,
-      name: updateNinjaDto,
-    };
+    return this.ninjaService.updateNinja(+id, updateNinjaDto);
   }
 
   // DELETE /ninjas/:id
   @Delete(':id')
-  removeNinja() {
-    return {};
+  removeNinja(@Param('id') id: string) {
+    return this.ninjaService.removeNinja(+id);
   }
 }
